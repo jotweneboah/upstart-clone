@@ -22,10 +22,24 @@ const formSchema = z.object({
     required_error: "Please select a loan purpose.",
   }),
   loanAmount: z.string().min(1, "Please enter a loan amount"),
+  loanTerm: z.string().min(1, "Please select a loan term"),
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Please enter a valid email address"),
   phone: z.string().min(10, "Please enter a valid phone number"),
+  education: z.string({
+    required_error: "Please select your education level",
+  }),
+  self_employed: z.string({
+    required_error: "Please select your employment status",
+  }),
+  income_annum: z.string().min(1, "Please enter your annual income"),
+  no_of_dependents: z.string().min(1, "Please enter number of dependents"),
+  cibil_score: z.string().min(1, "Please enter your CIBIL score"),
+  residential_assets_value: z.string().min(1, "Please enter residential assets value"),
+  commercial_assets_value: z.string().min(1, "Please enter commercial assets value"),
+  luxury_assets_value: z.string().min(1, "Please enter luxury assets value"),
+  bank_asset_value: z.string().min(1, "Please enter bank asset value"),
 });
 
 const CheckRate = () => {
@@ -36,10 +50,20 @@ const CheckRate = () => {
     defaultValues: {
       loanPurpose: "",
       loanAmount: "",
+      loanTerm: "",
       firstName: "",
       lastName: "",
       email: "",
       phone: "",
+      education: "",
+      self_employed: "",
+      income_annum: "",
+      no_of_dependents: "",
+      cibil_score: "",
+      residential_assets_value: "",
+      commercial_assets_value: "",
+      luxury_assets_value: "",
+      bank_asset_value: "",
     },
   });
 
@@ -88,19 +112,46 @@ const CheckRate = () => {
                   )}
                 />
                 
-                <FormField
-                  control={form.control}
-                  name="loanAmount"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Loan Amount ($)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter amount" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="loanAmount"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Loan Amount ($)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter amount" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="loanTerm"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Loan Term (months)</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select term" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="12">12 months</SelectItem>
+                            <SelectItem value="24">24 months</SelectItem>
+                            <SelectItem value="36">36 months</SelectItem>
+                            <SelectItem value="48">48 months</SelectItem>
+                            <SelectItem value="60">60 months</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FormField
@@ -132,33 +183,191 @@ const CheckRate = () => {
                   />
                 </div>
                 
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="your@email.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Phone Number</FormLabel>
+                        <FormControl>
+                          <Input placeholder="(123) 456-7890" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="education"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Education Level</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select education level" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="high_school">High School</SelectItem>
+                            <SelectItem value="undergraduate">Undergraduate</SelectItem>
+                            <SelectItem value="graduate">Graduate</SelectItem>
+                            <SelectItem value="post_graduate">Post Graduate</SelectItem>
+                            <SelectItem value="doctorate">Doctorate</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="self_employed"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Employment Status</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="yes">Self-employed</SelectItem>
+                            <SelectItem value="no">Employed</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="income_annum"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Annual Income ($)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter annual income" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="no_of_dependents"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Number of Dependents</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Enter number" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="cibil_score"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>CIBIL Score</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="your@email.com" {...field} />
+                        <Input placeholder="Enter CIBIL score" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
-                      <FormControl>
-                        <Input placeholder="(123) 456-7890" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
+                <div className="border-t pt-4 mt-4">
+                  <h3 className="text-lg font-semibold mb-4">Asset Information</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="residential_assets_value"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Residential Assets Value ($)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter value" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="commercial_assets_value"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Commercial Assets Value ($)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter value" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <FormField
+                      control={form.control}
+                      name="luxury_assets_value"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Luxury Assets Value ($)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter value" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="bank_asset_value"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Bank Assets Value ($)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Enter value" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
                 
                 <Button type="submit" className="w-full bg-teal-600 hover:bg-teal-700">
                   Check Your Rate
