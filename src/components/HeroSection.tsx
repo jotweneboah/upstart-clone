@@ -45,8 +45,8 @@ const HeroSection = () => {
           <div className="md:w-1/2 relative">
             <div className="bg-teal-light rounded-xl p-4 relative">
               <img
-                src="/lovable-uploads/c41c4c0c-96ce-47ae-a6fd-0c1b2572fa56.png"
-                alt="Person using phone for loans"
+                src="/lovable-uploads/e9cd6c6a-c322-4e8d-aefa-ee21e0e280f3.png"
+                alt="Man smiling at phone"
                 className="w-full h-auto object-contain rounded-lg"
               />
               <div className="absolute top-8 right-12">
